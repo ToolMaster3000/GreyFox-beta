@@ -166,33 +166,6 @@ the model to continue each time, until:
   at once, each shows a live `…` while in flight and a `✓`/`✗` as it
   finishes, instead of one combined result at the end.
 
-## Security & privacy
-
-- `read_file`, `write_file`, `list_directory`, and `run_python` are confined
-  to `~/greyfox-cli/workspace/` — path traversal is checked and rejected.
-  `run_python` runs as a fresh subprocess with a timeout, not in-process.
-- **Network egress is not restricted**: `web_search` and `http_request` can
-  reach any public URL the model constructs. That's the point of the tools,
-  but it means open internet access, not an allowlisted one — a real
-  constraint to weigh before pointing this at anything sensitive.
-- Whatever model you choose determines its own safety behavior; this script
-  doesn't modify or bypass a model's built-in judgment. Choose your model
-  deliberately, especially given open tool access.
-- `run_python` and `http_request` output should be treated as untrusted
-  before you act on it.
-- Termux:API access only works if you've explicitly installed that app.
-
-## Known limitations
-
-- `search_notes` is keyword-ranked, not semantic.
-- Context-window estimation is a rough chars/4 heuristic (no local
-  tokenizer), so compaction can fire a bit early or late relative to the
-  server's actual token count.
-- `/auto` has no checkpointing — if Termux is killed mid-task, that `/auto`
-  run is gone; start over.
-- Small/quantized models will sometimes skip a tool they should have used,
-  or misjudge when one's needed. This is a much smaller system than a
-  full-scale agent harness; it won't out-plan a large cloud model.
 
 ## Uninstalling
 
