@@ -5,16 +5,6 @@ server and gives the model a tool-calling loop: web search, arbitrary HTTP
 requests, sandboxed file access, Python execution, keyword notes search, and
 Termux:API integration.
 
-This is a deliberately trimmed-down cousin of a fuller CLI project of the
-same shape. It keeps the same tool surface and the `/auto` multi-turn
-autonomy command, but drops all of the long-context/autonomous-task
-reliability machinery (scratchpad file, pinned-invariants file, diff-based
-checkpointing, dependency-ordered subtask graph, context compaction,
-complexity classifier, mid-task reflection passes, structured fact ledger,
-playbook cache, contradiction detection, tiered verification). If you need
-those, look at a fuller-featured project. This one is meant to be small
-enough to read in one sitting.
-
 **Model is up to you.** This script doesn't download or assume any specific
 model — point `MODEL_URL` at whatever tool-calling-capable chat GGUF you
 want to run (sized to your device's RAM).
@@ -32,7 +22,8 @@ want to run (sized to your device's RAM).
 
 ```bash
 pkg install git
-git clone <this-repo> ~/greyfox-src
+pkg install libandroid-spawn
+git clone https://github.com/ToolMaster3000/GreyFox-beta ~/greyfox-src
 cd ~/greyfox-src
 MODEL_URL="https://huggingface.co/<repo>/resolve/main/<file>.gguf" bash setup.sh
 ```
@@ -97,9 +88,6 @@ the model to continue each time, until:
 - the model calls `request_user_input` (genuinely stuck / needs you), or
 - the turn cap is hit.
 
-There's no `todo.md`, no checkpoint/resume, no complexity tiering, and no
-separate reflection or verification pass — just the loop. Review `/auto`
-output; a run that stops cleanly isn't a guarantee every step was correct.
 
 ## Directory layout
 
